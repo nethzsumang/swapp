@@ -1,0 +1,32 @@
+<mvc:View
+	controllerName="com.kennethsumang.swapp.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<SplitApp
+		id="SplitAppDemo"
+		initialDetail="detail"
+		initialMaster="master">
+		<detailPages>
+			<Page
+				id="detail"
+				title="Details"
+				backgroundDesign= "Solid">
+				<Label text="Detail page 1" />
+			</Page>
+		</detailPages>
+		<masterPages>
+			<Page
+				id="master"
+				title="Star Wars Characters"
+				backgroundDesign= "List">
+				<List items="{swapi>/results}">
+					<items>
+						<StandardListItem title="{swapi>name}" press=".handleListItemClick" />
+					</items>
+				</List>
+			</Page>
+		</masterPages>
+	</SplitApp>
+</mvc:View>

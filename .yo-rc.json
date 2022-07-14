@@ -1,0 +1,14 @@
+{
+  "generator-ui5-ts-app": {
+    "application": "swapp",
+    "namespace": "com.kennethsumang",
+    "framework": "OpenUI5",
+    "frameworkVersion": "1.104.0",
+    "author": "Kenneth Sumang",
+    "tstypes": "@openui5/ts-types-esm",
+    "tstypesVersion": "1.104.0",
+    "appId": "com.kennethsumang.swapp",
+    "appURI": "com/kennethsumang/swapp",
+    "setupCompleted": true
+  }
+}
