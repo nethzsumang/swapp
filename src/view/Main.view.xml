@@ -13,7 +13,7 @@
 				id="detail"
 				title="Details"
 				backgroundDesign= "Solid">
-				<Label text="Detail page 1" />
+				<Label text="{state>/name}" visible="{ !!$(state>/name) }" />
 			</Page>
 		</detailPages>
 		<masterPages>
@@ -23,7 +23,10 @@
 				backgroundDesign= "List">
 				<List items="{swapi>/results}">
 					<items>
-						<StandardListItem title="{swapi>name}" press=".handleListItemClick" />
+						<StandardListItem
+							title="{swapi>name}"
+							type="Active"
+							press=".handleListItemClick($event, ${swapi>name})" />
 					</items>
 				</List>
 			</Page>
