@@ -23,7 +23,7 @@ export default class Main extends BaseController {
 		this.filmService = new FilmService();
 		this.speciesService = new SpeciesService();
 		
-		this.getView().setModel(this.peopleService.getPeopleList({}), 'peopleList');
+		this.getView().setModel(await this.peopleService.getPeopleList(), 'peopleList');
 		this.getView().setModel(this.filmService.getFilms({}), 'filmList');
 		this.getView().setModel(await this.speciesService.getSpecies(), 'speciesList');
 
@@ -31,6 +31,7 @@ export default class Main extends BaseController {
 		let stateModel = new JSONModel({});
 		stateModel.setDefaultBindingMode(BindingMode.OneWay);
 		this.getView().setModel(stateModel, 'state');
+		console.log(this.getView().getModel('peopleList').getProperty('/results'));
 	}
 	
 	public sayHello() : void {

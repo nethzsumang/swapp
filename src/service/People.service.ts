@@ -22,10 +22,10 @@ export default class PeopleService
     /**
      * Gets people list based on parameters
      * @param   {object} params 
-     * @returns {JSONModel}
+     * @returns {Promise<JSONModel>}
      */
-    public getPeopleList(params : Object) : JSONModel {
-        return this.peopleRepository.getPeople(params);
+    public async getPeopleList(params : Object = {}) : Promise<JSONModel> {
+        return await this.peopleRepository.getPeople(params);
     }
 
     /**

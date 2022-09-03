@@ -1,4 +1,5 @@
 import JSONModel from "sap/ui/model/json/JSONModel";
+import Species from "../interfaces/Species.interface";
 
 /**
  * Species Repository
@@ -13,7 +14,7 @@ export default class SpeciesRepository
      * @returns {Promise<JSONModel>}
      */
     public async getSpecies(params : Object = {}) : Promise<JSONModel> {
-        let speciesList = [];
+        let speciesList : Species[] = [];
         let page = 1;
         let hasNext : boolean = false;
         do {
@@ -21,7 +22,7 @@ export default class SpeciesRepository
             const responseData = response.data;
             if (responseData.results !== undefined) {
                 hasNext = responseData.next !== null;
-                speciesList.push(responseData.results);
+                speciesList = [...speciesList, ...responseData.results];
                 page++;
             } else {
                 hasNext = false;

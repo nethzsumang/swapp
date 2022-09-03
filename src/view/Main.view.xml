@@ -21,7 +21,7 @@
 				id="master"
 				title="Star Wars Characters"
 				backgroundDesign= "List">
-				<List id="charList" items="{peopleList>/results}" growing="true" growingThreshold="10" growingScrollToLoad="true">
+				<List id="charList" items="{peopleList>/results}" growing="true" growingThreshold="100">
 					<items>
 						<StandardListItem
 							title="{peopleList>name}"
