@@ -23,15 +23,46 @@ export default class Main extends BaseController {
 		this.filmService = new FilmService();
 		this.speciesService = new SpeciesService();
 		
-		this.getView().setModel(await this.peopleService.getPeopleList(), 'peopleList');
-		this.getView().setModel(this.filmService.getFilms({}), 'filmList');
-		this.getView().setModel(await this.speciesService.getSpecies(), 'speciesList');
+		await this.getData();
 
 		// state data model
 		let stateModel = new JSONModel({});
 		stateModel.setDefaultBindingMode(BindingMode.OneWay);
 		this.getView().setModel(stateModel, 'state');
-		console.log(this.getView().getModel('peopleList').getProperty('/results'));
+	}
+
+	private async getData() {
+		if (localStorage.getItem('swapi_peopleList') === null) {
+			const peopleList : JSONModel = await this.peopleService.getPeopleList();
+			const peopleListData = peopleList.getProperty('/results');
+			localStorage.setItem('swapi_peopleList', JSON.stringify(peopleListData));
+		}
+
+		if (localStorage.getItem('swapi_filmList') === null) {
+			const filmList : JSONModel= this.filmService.getFilms({});
+			const filmListData = filmList.getProperty('/results');
+			localStorage.setItem('swapi_filmList', JSON.stringify(filmListData));
+		}
+
+		if (localStorage.getItem('swapi_speciesList') === null) {
+			const speciesList : JSONModel = await this.speciesService.getSpecies();
+			const speciesListData = speciesList.getProperty('/results');
+			localStorage.setItem('swapi_speciesList', JSON.stringify(speciesListData));
+		}
+
+		const peopleModel = new JSONModel({
+			results: JSON.parse(localStorage.getItem('swapi_peopleList'))
+		});
+		const filmModel = new JSONModel({
+			results: JSON.parse(localStorage.getItem('swapi_filmList'))
+		});
+		const speciesModel = new JSONModel({
+			results: JSON.parse(localStorage.getItem('swapi_speciesList'))
+		});
+
+		this.getView().setModel(peopleModel, 'peopleList');
+		this.getView().setModel(filmModel, 'filmList');
+		this.getView().setModel(speciesModel, 'speciesList');
 	}
 	
 	public sayHello() : void {
