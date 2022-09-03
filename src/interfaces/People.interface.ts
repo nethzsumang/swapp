@@ -1,7 +1,7 @@
 /**
  * Interface for People result in swapi.dev
  */
-interface People {
+export default interface People {
     name: string;
     height: string|number;
     mass: string|number;

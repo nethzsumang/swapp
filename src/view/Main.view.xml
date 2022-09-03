@@ -21,12 +21,12 @@
 				id="master"
 				title="Star Wars Characters"
 				backgroundDesign= "List">
-				<List items="{swapi>/results}">
+				<List id="charList" items="{peopleList>/results}" growing="true" growingThreshold="10" growingScrollToLoad="true">
 					<items>
 						<StandardListItem
-							title="{swapi>name}"
+							title="{peopleList>name}"
 							type="Active"
-							press=".handleListItemClick($event, ${swapi>name})" />
+							press=".handleListItemClick($event, ${peopleList>name})" />
 					</items>
 				</List>
 			</Page>
