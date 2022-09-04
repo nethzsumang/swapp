@@ -22,13 +22,23 @@ export default class Main extends BaseController {
 		this.peopleService = new PeopleService();
 		this.filmService = new FilmService();
 		this.speciesService = new SpeciesService();
-		
-		await this.getData();
 
 		// state data model
-		let stateModel = new JSONModel({});
+		let stateModel = new JSONModel({
+			loading: false
+		});
 		stateModel.setDefaultBindingMode(BindingMode.OneWay);
-		this.getView().setModel(stateModel, 'state');
+		this.setModel(stateModel, 'state');
+
+		// selectedPeople data model
+		let selectedPeopleModel = new JSONModel();
+		this.setModel(selectedPeopleModel, 'selectedPeople');
+	}
+
+	async onAfterRendering(): Promise<void> {
+		this.setJSONModelProperties('state', {loading: true});
+		await this.getData();
+		this.setJSONModelProperties('state', {loading: false});
 	}
 
 	private async getData() {
@@ -60,9 +70,9 @@ export default class Main extends BaseController {
 			results: JSON.parse(localStorage.getItem('swapi_speciesList'))
 		});
 
-		this.getView().setModel(peopleModel, 'peopleList');
-		this.getView().setModel(filmModel, 'filmList');
-		this.getView().setModel(speciesModel, 'speciesList');
+		this.setModel(peopleModel, 'peopleList');
+		this.setModel(filmModel, 'filmList');
+		this.setModel(speciesModel, 'speciesList');
 	}
 	
 	public sayHello() : void {
@@ -72,22 +82,22 @@ export default class Main extends BaseController {
 	public handleListItemClick(event : Event, name : string) : void {
 		event.preventDefault();
 
-		let newStateObject : State = {};
+		let newStateObject = {};
 
-		const peopleList = this.getView().getModel('peopleList').getProperty('/results');
-		const filmList = this.getView().getModel('filmList').getProperty('/results');
-		const speciesList = this.getView().getModel('speciesList').getProperty('/results');
+		const peopleList = this.getModel('peopleList').getProperty('/results');
+		const filmList = this.getModel('filmList').getProperty('/results');
+		const speciesList = this.getModel('speciesList').getProperty('/results');
 
 		const selectedPeopleDetails = this.peopleService.findDetailsFromList({
 			peopleList: peopleList,
 			filmList: filmList,
 			speciesList: speciesList
 		}, name);
-		newStateObject['selectedPeople'] = selectedPeopleDetails;
+		newStateObject = {...selectedPeopleDetails};
 
 		let newState = new JSONModel(newStateObject);
 		newState.setDefaultBindingMode(BindingMode.OneWay);
-		this.getView().setModel(newState, 'state');
-		console.log(this.getView().getModel('state'));
+		this.setModel(newState, 'selectedPeople');
+		console.log(this.getModel('selectedPeople'));
 	}
 }

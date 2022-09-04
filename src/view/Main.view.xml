@@ -12,8 +12,9 @@
 			<Page
 				id="detail"
 				title="Details"
-				backgroundDesign= "Solid">
-				<Label text="{state>/name}" visible="{ !!$(state>/name) }" />
+				backgroundDesign= "Solid"
+				busy="{state>/loading}">
+				<Label text="{selectedPeople>/name}" visible="{ !!$(selectedPeople>/name) }" />
 			</Page>
 		</detailPages>
 		<masterPages>
