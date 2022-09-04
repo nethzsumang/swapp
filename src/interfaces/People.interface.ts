@@ -1,3 +1,6 @@
+import Species from './Species.interface';
+import Film from './Film.interface';
+
 /**
  * Interface for People result in swapi.dev
  */
@@ -18,4 +21,8 @@ export default interface People {
     created: string;
     edited: string;
     url: string;
+
+    // added fields for details
+    species_details: Species;
+    film_details: Array<Film>;
 }

@@ -41,12 +41,20 @@ export default class PeopleService
 				selectedPeople = {...people};
 			}
 		});
-        selectedPeople['species'] = selectedPeople['species'].map((speciesUrl : string) => {
-            return this.findSpeciesNameFromList(objectList['speciesList'], speciesUrl);
+
+        selectedPeople['film_details'] = selectedPeople['films'].map((filmUrl : string) => {
+            return this.findFilmDetailFromList(objectList['filmList'], filmUrl);
         });
-        selectedPeople['films'] = selectedPeople['films'].map((filmUrl : string) => {
-            return this.findFilmNameFromList(objectList['filmList'], filmUrl);
+
+        let selectedPeopleSpeciesList = selectedPeople['species'].map((speciesUrl : string) => {
+            return this.findSpeciesDetailFromList(objectList['speciesList'], speciesUrl);
         });
+
+        if (selectedPeopleSpeciesList.length === 0) {
+            selectedPeople['species_details'] = null;
+        } else {
+            selectedPeople['species_details'] = selectedPeopleSpeciesList[0];
+        }
 		return selectedPeople;
     }
 
@@ -56,14 +64,14 @@ export default class PeopleService
      * @param   {string}         url 
      * @returns {string}
      */
-    private findSpeciesNameFromList(speciesList : Array<Species>, url : String) : string {
-        let speciesName = '';
+    private findSpeciesDetailFromList(speciesList : Array<Species>, url : String) : Species {
+        let speciesDetail : Species;
         speciesList.forEach((species : Species) => {
             if (species.url === url) {
-                speciesName = species.name;
+                speciesDetail = species;
             }
         });
-        return speciesName;
+        return speciesDetail;
     }
 
     /**
@@ -72,13 +80,13 @@ export default class PeopleService
      * @param   {string}         url 
      * @returns {string}
      */
-     private findFilmNameFromList(filmList : Array<Film>, url : String) : string {
-        let filmName = '';
+     private findFilmDetailFromList(filmList : Array<Film>, url : String) : Film {
+        let filmDetail : Film;
         filmList.forEach((film : Film) => {
             if (film.url === url) {
-                filmName = film.title;
+                filmDetail = film;
             }
         });
-        return filmName;
+        return filmDetail;
     }
 }
