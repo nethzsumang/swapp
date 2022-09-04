@@ -25,4 +25,5 @@ export default interface People {
     // added fields for details
     species_details: Species;
     film_details: Array<Film>;
+    film_name_list: string;
 }

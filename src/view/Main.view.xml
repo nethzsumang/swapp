@@ -105,27 +105,27 @@
 							<f:formElements>
 								<f:FormElement label="Name">
 									<f:fields>
-										<Text text="{selectedPeople>/species_details/name}"  />
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/name}}"  />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Classification">
 									<f:fields>
-										<Text text="{selectedPeople>/species_details/classification}" />
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/classification}}" />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Designation">
 									<f:fields>
-										<Text text="{selectedPeople>/species_details/designation}" />
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/designation}}" />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Average Lifespan">
 									<f:fields>
-										<Text text="{selectedPeople>/species_details/average_lifespan}" />
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/average_lifespan}}" />
 									</f:fields>
 								</f:FormElement>
 								<f:FormElement label="Language">
 									<f:fields>
-										<Text text="{selectedPeople>/species_details/language}" />
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/language}}" />
 									</f:fields>
 								</f:FormElement>
 							</f:formElements>
@@ -135,7 +135,7 @@
 							<f:formElements>
 								<f:FormElement label="Films">
 									<f:fields>
-										<Text text="{Url}" />
+										<Text text="{selectedPeople>/film_name_list}" />
 									</f:fields>
 								</f:FormElement>
 							</f:formElements>

@@ -42,9 +42,13 @@ export default class PeopleService
 			}
 		});
 
+        let filmNameList : Array<string> = [];
         selectedPeople['film_details'] = selectedPeople['films'].map((filmUrl : string) => {
-            return this.findFilmDetailFromList(objectList['filmList'], filmUrl);
+            const filmDetail = this.findFilmDetailFromList(objectList['filmList'], filmUrl);
+            filmNameList.push(filmDetail.title);
+            return filmDetail;
         });
+        selectedPeople['film_name_list'] = filmNameList.join(', ');
 
         let selectedPeopleSpeciesList = selectedPeople['species'].map((speciesUrl : string) => {
             return this.findSpeciesDetailFromList(objectList['speciesList'], speciesUrl);
