@@ -2,8 +2,9 @@
 	controllerName="com.kennethsumang.swapp.controller.Main"
 	displayBlock="true"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc">
-
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core">
 	<SplitApp
 		id="SplitAppDemo"
 		initialDetail="detail"
@@ -12,8 +13,135 @@
 			<Page
 				id="detail"
 				title="Details"
-				backgroundDesign= "Solid">
-				<Label text="Detail page 1" />
+				backgroundDesign= "Solid"
+				busy="{state>/loading}">
+
+				<f:Form id="FormDisplay480_12120-2">
+					<f:title>
+						<core:Title text="Main Details" />
+					</f:title>
+					<f:layout>
+						<f:ResponsiveGridLayout
+							labelSpanXL="2"
+							labelSpanM="12"
+							adjustLabelSpan="false"
+							emptySpanXL="0"
+							columnsXL="1"
+							singleContainerFullSize="false" />
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer title="Primary Details">
+							<f:formElements>
+								<f:FormElement label="Name">
+									<f:fields>
+										<Text text="{selectedPeople>/name}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Birth Year">
+									<f:fields>
+										<Text text="{selectedPeople>/birth_year}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Gender">
+									<f:fields>
+										<Text text="{selectedPeople>/gender}" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+						<f:FormContainer title="Biological Details">
+							<f:formElements>
+								<f:FormElement label="Height">
+									<f:fields>
+										<Text text="{selectedPeople>/height}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Mass">
+									<f:fields>
+										<Text text="{selectedPeople>/mass}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Hair Color">
+									<f:fields>
+										<Text text="{selectedPeople>/hair_color}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Skin Color">
+									<f:fields>
+										<Text text="{selectedPeople>/skin_color}" />
+									</f:fields>
+								</f:FormElement>
+
+								<f:FormElement label="Eye Color">
+									<f:fields>
+										<Text text="{selectedPeople>/eye_color}" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
+
+				<f:Form id="FormDisplay480_12120">
+					<f:title>
+						<core:Title text="Character Details" />
+					</f:title>
+					<f:layout>
+						<f:ResponsiveGridLayout
+							labelSpanXL="2"
+							labelSpanM="12"
+							adjustLabelSpan="false"
+							emptySpanXL="0"
+							columnsXL="1"
+							singleContainerFullSize="false" />
+					</f:layout>
+					<f:formContainers>
+						<f:FormContainer title="Species">
+							<f:formElements>
+								<f:FormElement label="Name">
+									<f:fields>
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/name}}"  />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Classification">
+									<f:fields>
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/classification}}" />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Designation">
+									<f:fields>
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/designation}}" />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Average Lifespan">
+									<f:fields>
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/average_lifespan}}" />
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Language">
+									<f:fields>
+										<Text text="{= ${selectedPeople>/species_details} === null ?  'N/A' : ${selectedPeople>/species_details/language}}" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+
+						<f:FormContainer title="Appeared On">
+							<f:formElements>
+								<f:FormElement label="Films">
+									<f:fields>
+										<Text text="{selectedPeople>/film_name_list}" />
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
 			</Page>
 		</detailPages>
 		<masterPages>
@@ -21,9 +149,12 @@
 				id="master"
 				title="Star Wars Characters"
 				backgroundDesign= "List">
-				<List items="{swapi>/results}">
+				<List id="charList" items="{peopleList>/results}" growing="true" growingThreshold="100">
 					<items>
-						<StandardListItem title="{swapi>name}" press=".handleListItemClick" />
+						<StandardListItem
+							title="{peopleList>name}"
+							type="Active"
+							press=".handleListItemClick($event, ${peopleList>name})" />
 					</items>
 				</List>
 			</Page>

@@ -6,6 +6,7 @@ import ResourceModel from "sap/ui/model/resource/ResourceModel";
 import ResourceBundle from "sap/base/i18n/ResourceBundle";
 import Router from "sap/ui/core/routing/Router";
 import History from "sap/ui/core/routing/History";
+import JSONModel from "sap/ui/model/json/JSONModel";
 
 /**
  * @namespace com.kennethsumang.swapp.controller
@@ -80,6 +81,15 @@ export default abstract class BaseController extends Controller {
 		} else {
 			this.getRouter().navTo("main", {}, undefined, true);
 		}
+	}
+
+	public setJSONModelProperties(name : string, props : Object) : void {
+		const model = this.getView().getModel(name) as JSONModel;
+		const data = model.getData();
+		// change the data of that model
+		let newData = {...data, ...props};
+		this.getView().setModel(new JSONModel(newData), name);
+
 	}
 
 }
